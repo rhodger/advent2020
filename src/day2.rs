@@ -38,7 +38,8 @@ impl Password {
         let (i, j) = (self.rule.1 as usize - 1, self.rule.2 as usize - 1);
         let target_char = self.rule.0;
         let indexable_pass = self.pass.as_bytes();
-        if indexable_pass[i] as char == target_char || indexable_pass[j] as char == target_char {
+        if (indexable_pass[i] as char == target_char || indexable_pass[j] as char == target_char)
+        && !(indexable_pass[i] as char == target_char && indexable_pass[j] as char == target_char) {
             return true;
         } else {
             return false;
@@ -111,9 +112,11 @@ mod tests {
         let password_1 = Password::new("1-3 b: burger").unwrap();
         let password_2 = Password::new("1-3 b: nowhere").unwrap();
         let password_3 = Password::new("3-4 g: burger").unwrap();
+        let password_4 = Password::new("2-4 s: asssss").unwrap();
 
         assert_eq!(password_1.test_alternate_validity(), true);
         assert_eq!(password_2.test_alternate_validity(), false);
         assert_eq!(password_3.test_alternate_validity(), true);
+        assert_eq!(password_4.test_alternate_validity(), false);
     }
 }
