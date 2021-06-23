@@ -6,6 +6,7 @@ use std::io::{prelude::*, BufReader};
 
 fn main() {
     solve_2_1();
+    solve_2_2();
 }
 
 fn solve_1_1() {
@@ -46,7 +47,6 @@ fn solve_1_2() {
 
 fn solve_2_1() {
     println!("Solving for 2-1");
-    let filename = String::from("Data/day2.txt");
     let file = File::open("Data/day2.txt").unwrap();
     let reader = BufReader::new(file);
     let mut count: u32 = 0;
@@ -55,6 +55,22 @@ fn solve_2_1() {
         let password = day2::Password::new(&line.unwrap());
         if password.is_ok() {
             if password.unwrap().test_validity() { count = count + 1 }
+        }
+    }
+
+    println!("Solution: {}(?)", count);
+}
+
+fn solve_2_2() {
+    println!("Solving for 2-2");
+    let file = File::open("Data/day2.txt").unwrap();
+    let reader = BufReader::new(file);
+    let mut count: u32 = 0;
+
+    for line in reader.lines() {
+        let password = day2::Password::new(&line.unwrap());
+        if password.is_ok() {
+            if password.unwrap().test_alternate_validity() { count = count + 1 }
         }
     }
 
