@@ -1,12 +1,12 @@
 mod day1;
 mod day2;
+mod day3;
 
 use std::fs::File;
 use std::io::{prelude::*, BufReader};
 
 fn main() {
-    solve_2_1();
-    solve_2_2();
+    solve_3_2();
 }
 
 fn solve_1_1() {
@@ -75,4 +75,31 @@ fn solve_2_2() {
     }
 
     println!("Solution: {}(?)", count);
+}
+
+fn solve_3_1() {
+    let mut slope = day3::Slope::new("Data/day3.txt");
+    let trees = slope.iterate_to_completion();
+
+    println!("{}", trees);
+}
+
+fn solve_3_2() {
+    let vectors: [(i32,i32); 5] = [
+        (1, 1),
+        (1, 3),
+        (1, 5),
+        (1, 7),
+        (2, 1),
+    ];
+
+    let mut total_trees = 1;
+    for vector in vectors {
+        let mut slope = day3::Slope::new("Data/day3.txt");
+        slope.set_vector(vector.0, vector.1);
+        total_trees = total_trees * slope.iterate_to_completion();
+    }
+
+
+    println!("{}", total_trees);
 }
